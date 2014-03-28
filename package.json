@@ -1,7 +1,7 @@
 {
   "name": "noflo-docco",
   "description": "Turn source code into documentation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Henri Bergius",
     "email": "henri.bergius@iki.fi"
@@ -17,10 +17,11 @@
     }
   ],
   "dependencies": {
-    "noflo": "~0.3.3",
+    "noflo": "~0.5.0",
     "docco": "0.6.x"
   },
   "noflo": {
+    "icon": "book",
     "components": {
       "ParseSource": "./components/ParseSource.coffee"
     }
