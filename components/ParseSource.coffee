@@ -31,4 +31,3 @@ exports.getComponent = ->
       out: new noflo.IP 'closeBracket', fileName
 
     output.done()
-  c
