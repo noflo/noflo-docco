@@ -20,6 +20,7 @@ module.exports = ->
     # Coding standards
     coffeelint:
       components: ['components/*.coffee']
+      specs: ['spec/*.coffee']
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-contrib-watch'
