@@ -1,28 +1,34 @@
 noflo = require 'noflo'
 docco = require 'docco'
 
-class CreateDocument extends noflo.Component
-  constructor: ->
-    @fileName = null
-    @inPorts =
-      source: new noflo.Port
-      filename: new noflo.Port
-    @outPorts =
-      out: new noflo.Port
-    
+exports.getComponent = ->
+
+  # Initialize the component and ports
+  c = new noflo.Component
+  c.inPorts.add 'filename',
+    datatype: 'string'
+  c.inPorts.add 'source',
+    datatype: 'string'
+  c.outPorts.add 'out',
+    datatype: 'object'
+
+  c.process (input, output) ->
     # We need a filename for correct source code detection based on language
-    @inPorts.filename.on 'data', (fileName) =>
-      @fileName = fileName
+    return unless input.has 'filename', 'source'
+    [fileName, source] = input.getData 'filename', 'source'
 
-    # Forward the groups normally
-    @inPorts.source.on 'beginGroup', (group) =>
-      @outPorts.out.beginGroup group
-    @inPorts.source.on 'data', (data) =>
-      # Parse the source code using Docco and forward the chunks
-      chunks = docco.parse @fileName, data
-      @outPorts.out.send chunk for chunk in chunks
-      @outPorts.out.disconnect()
-    @inPorts.source.on 'endGroup',  =>
-      @outPorts.out.endGroup()
+    # Parse the source code using Docco and forward the chunks
+    chunks = docco.parse fileName, source
 
-exports.getComponent = -> new CreateDocument
+    output.send
+      out: new noflo.IP 'openBracket', fileName
+
+    for chunk in chunks
+      output.send
+        out: chunk
+
+    output.send
+      out: new noflo.IP 'closeBracket', fileName
+
+    output.done()
+  c

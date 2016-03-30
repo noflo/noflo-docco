@@ -2,21 +2,30 @@ noflo = require 'noflo'
 fs = require 'fs'
 path = require 'path'
 chai = require 'chai' unless chai
-ParseSource = require '../components/ParseSource.coffee'
+baseDir = path.resolve __dirname, '../'
 
 describe 'ParseSource component', ->
   c = null
   source = null
   filename = null
   out = null
+  before (done) ->
+    loader = new noflo.ComponentLoader baseDir
+    loader.load 'docco/ParseSource', (err, instance) ->
+      return done err if err
+      c = instance
+      done()
   beforeEach ->
-    c = ParseSource.getComponent()
     source = noflo.internalSocket.createSocket()
     filename = noflo.internalSocket.createSocket()
     out = noflo.internalSocket.createSocket()
     c.inPorts.source.attach source
     c.inPorts.filename.attach filename
     c.outPorts.out.attach out
+  afterEach ->
+    c.inPorts.source.detach source
+    c.inPorts.filename.detach filename
+    c.outPorts.out.detach out
 
   describe 'when instantiated', ->
     it 'should have an filename port', ->
@@ -27,16 +36,23 @@ describe 'ParseSource component', ->
       chai.expect(c.outPorts.out).to.be.an 'object'
 
   describe 'parsing itself', ->
-    name = path.resolve __dirname, '../components/ParseSource.coffee'
-    src = fs.readFileSync name, 'utf-8'
+    name = null
+    src = null
+    before (done) ->
+      name = path.resolve __dirname, '../components/ParseSource.coffee'
+      fs.readFile name, 'utf-8', (err, content) ->
+        return done err if err
+        src = content
+        done()
     chunks = []
     it 'should produce chunks', (done) ->
-      out.on 'data', (data) ->
-        chunks.push data
-      out.once 'disconnect', ->
-        chai.expect(chunks).not.to.be.empty
-        done()
-      filename.send name
-      source.send src
+      out.on 'data', (ip) ->
+        if ip.type is 'data'
+          chunks.push ip.data
+        if ip.type is 'closeBracket'
+          chai.expect(chunks).not.to.be.empty
+          done()
+      filename.post name
+      source.post src
     it 'should contain several chunks of code and documentation', ->
       chai.expect(chunks).to.have.length.above 3
