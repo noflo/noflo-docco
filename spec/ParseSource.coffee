@@ -46,7 +46,7 @@ describe 'ParseSource component', ->
         done()
     chunks = []
     it 'should produce chunks', (done) ->
-      out.on 'data', (ip) ->
+      out.on 'ip', (ip) ->
         if ip.type is 'data'
           chunks.push ip.data
         if ip.type is 'closeBracket'
