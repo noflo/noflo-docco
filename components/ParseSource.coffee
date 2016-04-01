@@ -5,11 +5,16 @@ exports.getComponent = ->
 
   # Initialize the component and ports
   c = new noflo.Component
+  c.description = 'Parse a source file into documentation chunks'
+  c.icon = 'code'
   c.inPorts.add 'filename',
+    description: 'Original file name, used for determining syntax'
     datatype: 'string'
   c.inPorts.add 'source',
+    description: 'Source code'
     datatype: 'string'
   c.outPorts.add 'out',
+    description: 'Produced documentation chunks'
     datatype: 'object'
 
   c.process (input, output) ->
