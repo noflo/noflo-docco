@@ -12,8 +12,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "noflo": "0.8.0",
-    "docco": "0.7.0"
+    "noflo": "0.x >= 0.8",
+    "docco": "^0.7.0"
   },
   "noflo": {
     "icon": "book",

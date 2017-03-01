@@ -52,7 +52,7 @@ describe 'ParseSource component', ->
         if ip.type is 'closeBracket'
           chai.expect(chunks).not.to.be.empty
           done()
-      filename.post name
-      source.post src
+      filename.send name
+      source.send src
     it 'should contain several chunks of code and documentation', ->
       chai.expect(chunks).to.have.length.above 3
