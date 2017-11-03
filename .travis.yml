@@ -5,7 +5,7 @@ deploy:
   provider: npm
   email: henri.bergius@iki.fi
   api_key:
-    secure: YaV9gak4yh/kSkaLwfrb5QomXPhNp2onmWQ/5K9faX4235Of4UfrH1MPqRsoemNnMLrzgVHXhCXDKxnLeW8HpaX6bKwVmrCoHs9UWIyHYPQiY42BaF3kqp6TF4A+SvBwb7bByiHFloF+bb/sQdCwKzEE6tjyU/fg9ThNp8Dd0cM=
+    secure: TX6oJReAjdrBRMQA63GzwQLPLorWPdaSkutjG63bJnMqTOC2ZqSRyY3i6PptiWyKOv1xkerqe1cugiObaVs/JY3s8RFnwEmuaOuCIkyuYZiEemm0pcm4fmHKgUQ4J5uHVnyoevjAJgcjHvuOwA7iKIPoz719QJYhpNK4NrO1olM=
   on:
     tags: true
     repo: noflo/noflo-docco
