@@ -12,14 +12,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "noflo": "1.0.0",
+    "noflo": "^1.0.0",
     "docco": "^0.7.0"
   },
   "noflo": {
-    "icon": "book",
-    "components": {
-      "ParseSource": "./components/ParseSource.coffee"
-    }
+    "icon": "book"
   },
   "devDependencies": {
     "chai": "^4.0.0",
