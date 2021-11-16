@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "noflo": "^1.0.0",
-    "docco": "^0.8.0"
+    "docco": "^0.9.1"
   },
   "noflo": {
     "icon": "book"
